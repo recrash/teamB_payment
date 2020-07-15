@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
 @Entity
 @Table(name="Payment_table")
 public class Payment {
@@ -30,9 +32,14 @@ public class Payment {
 
         System.out.println("Payment-->onPostPersist() ");
 
-        Paid paid = new Paid();
-        BeanUtils.copyProperties(this, paid);
-        paid.publishAfterCommit();
+        if("REQ_PAY".equals(this.getPayStatus() ) ) {
+            Paid paid = new Paid();
+            BeanUtils.copyProperties(this, paid);
+            paid.publishAfterCommit();
+        }
+        else {
+            System.out.println("onPostPersist(), payStatus is " + this.getPayStatus());
+        }
 
     }
 
@@ -41,9 +48,14 @@ public class Payment {
 
         System.out.println("Payment-->onPostUpdate() ");
 
-        Refunded refunded = new Refunded();
-        BeanUtils.copyProperties(this, refunded);
-        refunded.publishAfterCommit();
+        if("CANCELLED".equals(this.getPayStatus() ) ) {
+            Refunded refunded = new Refunded();
+            BeanUtils.copyProperties(this, refunded);
+            refunded.publishAfterCommit();
+        }
+        else {
+            System.out.println("onPostUpdate(), payStatus is " + this.getPayStatus());
+        }
 
     }
 
