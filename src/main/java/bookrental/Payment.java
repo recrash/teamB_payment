@@ -28,17 +28,22 @@ public class Payment {
     @PostPersist
     public void onPostPersist(){
 
-        System.out.println("Payment-->onPostUpdate() ");
+        System.out.println("Payment-->onPostPersist() ");
 
         Paid paid = new Paid();
         BeanUtils.copyProperties(this, paid);
         paid.publishAfterCommit();
 
+    }
+
+    @PostUpdate
+    public void onPostUpdate() {
+
+        System.out.println("Payment-->onPostUpdate() ");
 
         Refunded refunded = new Refunded();
         BeanUtils.copyProperties(this, refunded);
         refunded.publishAfterCommit();
-
 
     }
 
