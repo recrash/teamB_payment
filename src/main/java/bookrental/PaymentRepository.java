@@ -1,11 +1,11 @@
 package bookrental;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
+        import org.springframework.data.repository.query.Param;
 
-import java.util.List;
+        import java.util.List;
 
 public interface PaymentRepository extends PagingAndSortingRepository<Payment, Long>{
 
-    List<Payment> findByRentalIdAndBookId(@Param("rentalId") Long rentalId, @Param("bookId") Long bookId );
+    List<Payment> findByRentalIdAndBookId(@Param("rentalId") Long rentalId, @Param("bookId") Long bookId);
 }
